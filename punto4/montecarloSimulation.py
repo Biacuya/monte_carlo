@@ -156,7 +156,8 @@ def simulacion_monte_carlo():
                 valor_repetido = encontrar_suertudos(lucky_list)
                 valor_repetido2 = encontrar_suertudos(lucky_list2)
                 print("Valor 2: ", valor_repetido2)
-
+                
+                #Tiro Extra
                 if valor_repetido == most_lucky(equipo_1)["nombre"]:
                     puntos_equipo_1 += lanzar(
                         most_lucky(equipo_1)["genero"], most_lucky(equipo_1)
