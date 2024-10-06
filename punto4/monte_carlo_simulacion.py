@@ -123,9 +123,9 @@ def simulacion_monte_carlo():
                     print('Equido dos ganador: ', puntos_equipo_2)
                     print('Equipo uno perdedor: ', puntos_equipo_1)
                     equipo_ganador_por_juego.append(2)
-
+                  count = 0
                 if cantidad_juegos >= n_juegos:
-                  condition = False;
+                  condition = False
                   
 
 
