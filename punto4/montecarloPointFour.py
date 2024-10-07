@@ -111,7 +111,7 @@ def actualizar_suerte(jugadores):
 def lanzar(jugador):
     # Reducción de resistencia por lanzamiento
     jugador["resistencia"] -= 5
-
+   
     # Probabilidad de acierto en función del género
     prob_diana = prob_diana_mujer if jugador["genero"] == "mujer" else prob_diana_hombre
     # Lanzamiento
@@ -316,13 +316,14 @@ def simulacion_monte_carlo():
     puntos_equipo_2 = 0
     puntos_ronda_1 = 0
     puntos_ronda_2 = 0
-    n_juegos = 5
+    n_juegos = 20000
     tiro_bonus = False
 
     # Simulación de las rondas
     count = 0
     cantidad_juegos = 0
-    while cantidad_juegos < n_juegos:
+    while cantidad_juegos <= n_juegos:
+        #print("Juego arriba: ", cantidad_juegos)
         # Lanzamientos para cada jugador de ambos equipos
         for jugador_1, jugador_2 in zip(equipo_1, equipo_2):
             resistencia_inicial_jugador_1 = jugador_1["resistencia_aux"]
@@ -345,13 +346,15 @@ def simulacion_monte_carlo():
 
             # Tiro Extra
             if valor_repetido == most_lucky(equipo_1)["nombre_jugador"]:
+                
                 puntos_equipo_1 += lanzar(most_lucky(equipo_1))
 
             if valor_repetido2 == most_lucky(equipo_2)["nombre_jugador"]:
+                
                 puntos_equipo_2 += lanzar(most_lucky(equipo_2))
 
             if jugador_1["resistencia"] <= 4:
-
+                print("player1")
                 count += 1
                 resistencia_inicial_jugador_1 -= max(
                     1, int(np.random.normal(cansacio_one, cansacio_two))
@@ -359,6 +362,7 @@ def simulacion_monte_carlo():
                 jugador_1["resistencia"] = resistencia_inicial_jugador_1
                 tiro_bonus = True
             else:
+                
                 puntos_jugador_1 = lanzar(jugador_1)
                 puntos_equipo_1 += puntos_jugador_1
                 jugador_1["puntos_individual"] = (
@@ -374,17 +378,18 @@ def simulacion_monte_carlo():
                 jugador_2["resistencia"] = resistencia_inicial_jugador_2
                 tiro_bonus = True
             else:
+                
                 puntos_jugador_2 = lanzar(jugador_2)
                 puntos_equipo_2 += puntos_jugador_2
                 jugador_2["puntos_individual"] = (
                     jugador_2["puntos_individual"] + puntos_jugador_2
                 )
                 tiro_bonus = False
-
-            if count == 10:
-
-                cantidad_juegos += 1
+            print(count)
+            if count >= 10:
+                print("AQUÍ")
                 tiro_bonus = True
+                cantidad_juegos += 1
                 print("Juego: ", cantidad_juegos)
                 calculos_individuales()
                 jugador_1["resistencia"] = jugador_1["resistencia_aux"]
@@ -402,8 +407,10 @@ def simulacion_monte_carlo():
 
                 registrar_genero_con_mas_victorias_por_juego(equipo_1 + equipo_2)
                 count = 0
+                print("Juego abajo: ", cantidad_juegos)
                 actualizar_suerte(equipo_1)
                 actualizar_suerte(equipo_2)
+        
 
     contar_victorias_totales()
     # Guardar los resultados del juego
