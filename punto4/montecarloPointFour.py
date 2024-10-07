@@ -308,23 +308,19 @@ def simulacion_monte_carlo():
         jugador["nombre_jugador"] = f"jugador{contador}"
         contador += 1
 
-    print(equipo_1)
-    print(equipo_2)
 
     #  for juego in range(n_juegos):
     puntos_equipo_1 = 0
     puntos_equipo_2 = 0
     puntos_ronda_1 = 0
     puntos_ronda_2 = 0
-    n_juegos = 20000
+    n_juegos = 100
     tiro_bonus = False
 
     # Simulación de las rondas
     count = 0
     cantidad_juegos = 0
     while cantidad_juegos <= n_juegos:
-        #print("Juego arriba: ", cantidad_juegos)
-        # Lanzamientos para cada jugador de ambos equipos
         for jugador_1, jugador_2 in zip(equipo_1, equipo_2):
             resistencia_inicial_jugador_1 = jugador_1["resistencia_aux"]
             resistencia_inicial_jugador_2 = jugador_2["resistencia_aux"]
@@ -354,7 +350,6 @@ def simulacion_monte_carlo():
                 puntos_equipo_2 += lanzar(most_lucky(equipo_2))
 
             if jugador_1["resistencia"] <= 4:
-                print("player1")
                 count += 1
                 resistencia_inicial_jugador_1 -= max(
                     1, int(np.random.normal(cansacio_one, cansacio_two))
@@ -385,9 +380,7 @@ def simulacion_monte_carlo():
                     jugador_2["puntos_individual"] + puntos_jugador_2
                 )
                 tiro_bonus = False
-            print(count)
             if count >= 10:
-                print("AQUÍ")
                 tiro_bonus = True
                 cantidad_juegos += 1
                 print("Juego: ", cantidad_juegos)
